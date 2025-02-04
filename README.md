@@ -18,6 +18,8 @@
 
 ## 🛠️ 성능측정
 - lighthouse와 react profiler를통해 **as-is / to-be**를 측정합니다.
+- 6가지 metrix 모두 합격점인 90~100점을 목표로 개선합니다.
+
 
 ## 📂 프로젝트 구조
 ├── performance1 : 가상스크롤 (virtual-scroll)
