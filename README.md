@@ -10,6 +10,7 @@
 | 양가영   | gayoung | [Gayoung](https://github.com/gayoung0619) |
 | 김문성   | munsung | [munsung](https://github.com/suld2495)  |
 | 이수경   | sukyung | [sukyung](https://github.com/sukyung6999)     |
+| 조영호   | youngho | [sukyung](https://github.com/ohoCoding)     |
 
 ## 🎯 목표  
 - 초기 로딩 시간 단축 및 실행 성능 향상  
