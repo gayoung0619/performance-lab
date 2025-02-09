@@ -7,7 +7,7 @@
 
 | 이름    | 브랜치    | GitHub                                |
 |--------|---------|---------------------------------------|
-| 양가영   | gayoung | [Gayoung](https://github.com/gayoung0619) |
+| 양가영   | gayoung | [gayoung](https://github.com/gayoung0619) |
 | 김문성   | munsung | [munsung](https://github.com/suld2495)  |
 | 이수경   | sukyung | [sukyung](https://github.com/sukyung6999)     |
 | 조영호   | youngho | [youngho](https://github.com/ohoCoding)     |
