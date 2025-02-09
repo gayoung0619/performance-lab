@@ -1,10 +1,12 @@
-import SchoolSelector from "./components/schoolselect.tsx";
+import Container from "./components/Container";
 
-function App() {
+import "./App.css";
 
-  return (
-      <SchoolSelector />
-  )
-}
+const App = () => (
+  <div className="app">
+    <h1>가상 스크롤 구현</h1>
+    <Container />
+  </div>
+);
 
 export default App
