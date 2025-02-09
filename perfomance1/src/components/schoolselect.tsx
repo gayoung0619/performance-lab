@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getSchoolList } from '../api/school';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 const SchoolSelector = () => {
   const { data: schoolList, isLoading } = useQuery({
@@ -9,39 +9,63 @@ const SchoolSelector = () => {
     queryFn: () => getSchoolList(),
     staleTime: 24 * 60 * 60 * 1000,
   });
+  const [scrollTop, setScrollTop] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const NODEPADDING = 10;
-  const [scrollPos, setScrollPos] = useState(0);
+  if (isLoading) return <p>Loading...</p>;
 
-  function handleScroll(e: React.UIEvent<HTMLDivElement>) {
-    const scrollTop = e.currentTarget.scrollTop;
-    setScrollPos(scrollTop);
-    console.log(scrollTop);
+  const totalItems = schoolList?.data.length;
+  const containerHeight = 320;
+  const totalHeight = totalItems * 20;
+
+  const startIdx = Math.max(0, Math.floor(scrollTop / 20) - 5);
+  const endIdx = Math.min(
+    totalItems - 1,
+    Math.ceil((scrollTop + containerHeight) / 20) + 5
+  );
+
+  const visibleItems = [];
+  for (let i = startIdx; i <= endIdx; i++) {
+    visibleItems.push({
+      index: i,
+      top: i * 20,
+    });
   }
 
+  const handleListScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    setScrollTop(e.currentTarget.scrollTop);
+  };
+
   return (
-    <div>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          <SchoolList onScroll={handleScroll}>
-            {schoolList?.data.map((ele, idx) => (
-              <div key={idx} data-value={idx} className="item_list">
-                {scrollPos < 20 * (idx + NODEPADDING) &&
-                  scrollPos + 320 > 20 * (idx - NODEPADDING) &&
-                  ele.name}
-              </div>
-            ))}
-          </SchoolList>
-        </>
-      )}
-    </div>
+    <SchoolListWrapper ref={containerRef} onScroll={handleListScroll}>
+      <div
+        style={{
+          height: totalHeight,
+          position: 'relative',
+        }}
+      >
+        {visibleItems.map(({ index, top }) => (
+          <div
+            key={index}
+            className="item_list"
+            style={{
+              position: 'absolute',
+              top,
+              height: '20px',
+              width: '100%',
+            }}
+          >
+            {schoolList?.data[index].name}
+          </div>
+        ))}
+      </div>
+    </SchoolListWrapper>
   );
 };
-const SchoolList = styled.div`
+const SchoolListWrapper = styled.div`
+  position: relative;
   height: 300px;
-  overflow: scroll;
+  overflow: auto;
   .item_list {
     min-height: 20px;
   }
