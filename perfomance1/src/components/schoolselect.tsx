@@ -29,7 +29,12 @@ const SchoolSelector = () => {
   );
 };
 const SchoolList = styled.div`
-  height: 300px;
+    height: 500px;
     overflow: scroll;
+    > div {
+        height: 200px;
+        background: green;
+        margin-top: 10px;
+    }
 `
 export default SchoolSelector;
