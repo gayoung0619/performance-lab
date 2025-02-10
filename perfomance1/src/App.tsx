@@ -1,7 +1,10 @@
-import SchoolSelector from './components/schoolselect';
+import SchoolSelector from "./components/schoolselect.tsx";
 
 function App() {
-  return <SchoolSelector />;
+
+  return (
+      <SchoolSelector />
+  )
 }
 
-export default App;
+export default App
