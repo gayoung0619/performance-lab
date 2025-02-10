@@ -10,7 +10,7 @@ const Container = () => {
   const [itemHeight, setItemHeight] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const itemRef = createRef<HTMLDivElement>();
-
+  
   const { data = [] } = useData();
 
   const { 
@@ -39,6 +39,18 @@ const Container = () => {
 
     const ONLY_FIRST_ITEM_BORDER_WIDTH = 1
     setItemHeight(itemRef.current.offsetHeight - ONLY_FIRST_ITEM_BORDER_WIDTH);
+
+    const ref = itemRef.current;
+
+    window.addEventListener(type, listener)
+    const a = setInterval(() => {
+
+    });
+
+    return () => {
+      clearInterval(id);
+      console.log(ref.ariaValueMax);
+    }
   }, [itemRef]);
 
   const filterData = data.slice(startData, endData);
