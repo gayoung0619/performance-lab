@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getSchoolList } from '../api/school';
 import styled from 'styled-components';
-import { useRef, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 const SchoolSelector = () => {
   const { data: schoolList, isLoading } = useQuery({
@@ -10,18 +10,26 @@ const SchoolSelector = () => {
     staleTime: 24 * 60 * 60 * 1000,
   });
   const [scrollTop, setScrollTop] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { totalItems, totalHeight, CONTAINER_HEIGHT } = useMemo(() => {
+    const items = schoolList?.data.length ?? 0;
+    return {
+      totalItems: items,
+      totalHeight: items * 20,
+      CONTAINER_HEIGHT: 300,
+    };
+  }, [schoolList?.data.length]);
+
+  const handleListScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
+    setScrollTop(e.currentTarget.scrollTop);
+  }, []);
 
   if (isLoading) return <p>Loading...</p>;
-
-  const totalItems = schoolList?.data.length;
-  const containerHeight = 300;
-  const totalHeight = totalItems * 20;
 
   const startIdx = Math.max(0, Math.floor(scrollTop / 20) - 5);
   const endIdx = Math.min(
     totalItems - 1,
-    Math.ceil((scrollTop + containerHeight) / 20) + 5
+    Math.ceil((scrollTop + CONTAINER_HEIGHT) / 20) + 5
   );
 
   const visibleItems = [];
@@ -32,12 +40,8 @@ const SchoolSelector = () => {
     });
   }
 
-  const handleListScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    setScrollTop(e.currentTarget.scrollTop);
-  };
-
   return (
-    <SchoolListWrapper ref={containerRef} onScroll={handleListScroll}>
+    <SchoolListWrapper onScroll={handleListScroll}>
       <div
         style={{
           height: totalHeight,
@@ -46,7 +50,7 @@ const SchoolSelector = () => {
       >
         {visibleItems.map(({ index, top }) => (
           <div
-            key={index}
+            key={schoolList?.data[index].id}
             className="item_list"
             style={{
               position: 'absolute',
