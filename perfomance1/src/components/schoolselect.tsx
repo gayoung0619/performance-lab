@@ -15,7 +15,7 @@ const SchoolSelector = () => {
   if (isLoading) return <p>Loading...</p>;
 
   const totalItems = schoolList?.data.length;
-  const containerHeight = 320;
+  const containerHeight = 300;
   const totalHeight = totalItems * 20;
 
   const startIdx = Math.max(0, Math.floor(scrollTop / 20) - 5);
